@@ -1,30 +1,16 @@
-use gpui_kit::{
-    base::plot::label::TEXT_SIZE,
-    component::{
-        button::{Button, ButtonVariants},
-        label::Label,
-    },
-    *,
-};
+use gpui_kit::*;
 
-use crate::app::root::{AppView::Welcome, AppViewChangeEvent, RootView};
+use crate::{
+    app::root::RootView,
+    features::simulation::components::{
+        simulation_panel::simulation_panel, simulation_viewport::simulation_viewport,
+    },
+};
 
 pub fn simulation_view(cx: &mut Context<RootView>) -> impl IntoElement {
     div()
         .size_full()
         .flex()
-        .flex_col()
-        .justify_center()
-        .items_center()
-        .gap_4()
-        .child(Label::new("TODO simulation").text_size(px(TEXT_SIZE * 2.0)))
-        .child(
-            Button::new("to-welcome-view")
-                .primary()
-                .label("Back")
-                .cursor_pointer()
-                .on_click(cx.listener(|_, _, _, cx| {
-                    cx.emit(AppViewChangeEvent { view: Welcome });
-                })),
-        )
+        .child(simulation_panel(cx))
+        .child(simulation_viewport())
 }
